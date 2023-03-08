@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ build_section.name }}</h1>
+  <ul>
+    {% for build in builds %}
+      <li>
+        <h2>{{ build.name }}</h2>
+        <ul>
+          {% for part in build.parts.all %}
+            <li>
+              {{ part.name }}
+              ({% if part.length %}length: {{ part.length }}, {% endif %}quantity: {{ part.quantity }})
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

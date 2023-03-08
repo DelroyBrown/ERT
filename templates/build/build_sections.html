@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Build sections</h1>
+  <ul>
+    {% for build_section in build_sections %}
+      <li><a href="{% url 'build_section_detail' build_section.pk %}">{{ build_section.name }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}
