@@ -1,20 +1,43 @@
-{% extends "base.html" %}
+  {% extends "base.html" %}
 
-{% block content %}
+  {% block content %}
   <h1>{{ build_section.name }}</h1>
+
+
+
   <ul>
     {% for build in builds %}
-      <li>
-        <h2>{{ build.name }}</h2>
-        <ul>
-          {% for part in build.parts.all %}
-            <li>
-              {{ part.name }}
-              ({% if part.length %}length: {{ part.length }}, {% endif %}quantity: {{ part.quantity }})
-            </li>
-          {% endfor %}
-        </ul>
-      </li>
+    <li>
+      <h2>{{ build.name }}</h2>
+      <ul>
+        {% for part in build.parts.all %}
+        <li>
+          {{ part.name }}
+          ({% if part.length %}length: {{ part.length }}, {% endif %}quantity: {{ part.quantity }})
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
     {% endfor %}
   </ul>
-{% endblock %}
+
+  <form action="{% url 'build_section_detail' pk=build_section.pk %}" method="post">
+    {% csrf_token %}
+    <table>
+      <thead>
+        <tr>
+          <th>Amount Made</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for build in build_section.build_set.all %}
+        <tr>
+          <td>
+            {% include 'build/add_amount_made.html' %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </form>
+  {% endblock %}
